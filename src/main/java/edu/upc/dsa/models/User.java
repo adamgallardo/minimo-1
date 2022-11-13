@@ -6,17 +6,13 @@ public class User {
     String userId;
     int puntos;
     int nivel;
-    String gameId;
-
-    public User(String id) {
+    public User() {
         this.userId = RandomUtils.getId();
         this.puntos= 50;
     }
-
     public String getId() {
         return this.userId;
     }
-
     public void setId(String id) {
         this.userId = id;
     }
@@ -31,12 +27,5 @@ public class User {
     }
     public void setNivel(int nivel) {
         this.nivel=nivel;
-    }
-    public String getGameId() {
-        return this.gameId;
-    }
-
-    public void setGameId(String id) {
-        this.gameId = id;
     }
 }

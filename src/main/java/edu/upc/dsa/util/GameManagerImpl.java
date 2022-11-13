@@ -13,7 +13,6 @@ public class GameManagerImpl implements GameManager{
     protected List<Juego> juegos;
     protected List<User> usuarios;
     final static Logger logger = Logger.getLogger(GameManagerImpl.class);
-
     private GameManagerImpl() {
         this.juegos = new LinkedList<>();
     }
@@ -48,25 +47,25 @@ public class GameManagerImpl implements GameManager{
         return null;
     }
     @Override
-    public User getNivel(String userId) {
+    public int getNivel(String userId) {
         logger.info("getNivel("+userId+")");
 
         for (User u: this.usuarios) {
-            if (u.getId().equals(userId) && u.getGameId().equals(null)) {
+            if (u.getId().equals(userId)) {
                 logger.info("getNivel("+userId+"): "+u);
 
-                return u;
+                return u.getNivel();
             }
         }
 
         logger.warn("not found or already in a game" + userId);
-        return null;
+        return 0;
     }
     @Override
     public int getPuntos(String userId) {
         logger.info("getPuntos("+userId+")");
         for (User u: this.usuarios) {
-            if (u.getId().equals(userId) && u.getGameId().equals(null)) {
+            if (u.getId().equals(userId)) {
                 logger.info("getPuntos("+userId+"): "+u);
                 return u.getPuntos();
             }
@@ -78,7 +77,7 @@ public class GameManagerImpl implements GameManager{
     public Juego nextNivel(String userId, int puntos, String fecha) {
         logger.info("nextNivel("+userId+")");
         for (User u: this.usuarios) {
-            if (u.getId().equals(userId) && u.getGameId().equals(null)) {
+            if (u.getId().equals(userId)) {
                 logger.info("nextNivel("+userId+"): "+ u + fecha);
                 u.setPuntos(puntos);
                 u.setNivel(u.getNivel() + 1);
@@ -93,6 +92,13 @@ public class GameManagerImpl implements GameManager{
     }
     @Override
     public List<String> players(String id) {
+        logger.info("Lista Jugadores("+id+")");
+        for (Juego j: this.juegos) {
+            if (j.getId().equals(id)) {
+                logger.info("Lista Jugadores("+id+"): "+ j);
+                return j.getPlayers();
+            }
+        }
         return null;
     }
     @Override
